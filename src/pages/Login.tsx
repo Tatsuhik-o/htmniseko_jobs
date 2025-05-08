@@ -9,7 +9,6 @@ import useError from "../hooks/useError";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Loading from "../components/Loading";
-import { ThreeDot } from "react-loading-indicators";
 
 const useStyles = makeStyles({
   login: {
@@ -52,17 +51,17 @@ const useStyles = makeStyles({
 export default function Login() {
   const { mobileView } = useContext(AppContext);
   const classes = useStyles({ mobileView });
-  const avatar = useAvatar(250);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { error, setError } = useError(1500);
-  const { isAuthenticated } = useAuth();
   const [awaitingLogin, setAwaitingLogin] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { error, setError } = useError(1500);
+  const isAuthenticated = useAuth();
+  const avatar = useAvatar(250);
 
   useLayoutEffect(() => {
-    if (isAuthenticated) {
-      navigate("/add_entry");
+    if (isAuthenticated === true) {
+      navigate("/add_new_job");
     }
   }, [isAuthenticated, navigate]);
 
@@ -91,7 +90,7 @@ export default function Login() {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
-        navigate("/add_entry");
+        navigate("/add_new_job");
       } else {
         setError("Username or Password is Incorrect ...");
       }
@@ -103,40 +102,37 @@ export default function Login() {
   }
 
   return (
-    <div className={classes.login}>
-      <div className={classes.login_wrapper}>
-        <div className={classes.avatar}>
-          <img src={avatar} alt="" />
+    isAuthenticated === false && (
+      <div className={classes.login}>
+        <div className={classes.login_wrapper}>
+          <div className={classes.avatar}>
+            <img src={avatar} alt="" />
+          </div>
+          <div className={classes.error}>{error}</div>
+          <form onSubmit={handleSubmit} name="login">
+            <Input
+              type="text"
+              label="Username"
+              currentValue={username}
+              controllerFunction={setUsername}
+            />
+            <Input
+              type="password"
+              label="Password"
+              currentValue={password}
+              controllerFunction={setPassword}
+            />
+            <CustomButton
+              content="Login"
+              color="#ffffff"
+              bgColor="#424242"
+              pdR={3}
+              pdT={1}
+              state={awaitingLogin}
+            />
+          </form>
         </div>
-        <div className={classes.error}>{error}</div>
-        <form onSubmit={handleSubmit} name="login">
-          <Input
-            type="text"
-            label="Username"
-            currentValue={username}
-            controllerFunction={setUsername}
-          />
-          <Input
-            type="password"
-            label="Password"
-            currentValue={password}
-            controllerFunction={setPassword}
-          />
-          <CustomButton
-            content={
-              awaitingLogin ? (
-                <ThreeDot color={"#95a5a6"} size="small" />
-              ) : (
-                "Login"
-              )
-            }
-            color="#ffffff"
-            bgColor="#424242"
-            pdR={3}
-            pdT={1}
-          />
-        </form>
       </div>
-    </div>
+    )
   );
 }

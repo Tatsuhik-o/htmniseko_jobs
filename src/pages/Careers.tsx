@@ -9,5 +9,5 @@ const useStyles = makeStyles({
 
 export default function Careers() {
   const classes = useStyles();
-  return <div className={classes.careers}></div>;
+  return <div className={classes.careers}>Careers</div>;
 }

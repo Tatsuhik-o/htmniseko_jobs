@@ -1,4 +1,5 @@
 import { makeStyles } from "@mui/styles";
+import { ThreeDot } from "react-loading-indicators";
 
 const useStyles = makeStyles({
   custom_button: (props: {
@@ -26,6 +27,7 @@ type TCustomButton = {
   bgColor: string;
   pdT: number;
   pdR: number;
+  state: boolean;
 };
 
 export default function CustomButton({
@@ -34,7 +36,12 @@ export default function CustomButton({
   bgColor,
   pdT,
   pdR,
+  state,
 }: TCustomButton) {
   const classes = useStyles({ color, bgColor, pdT, pdR });
-  return <button className={classes.custom_button}>{content}</button>;
+  return (
+    <button className={classes.custom_button} disabled={state}>
+      {state ? <ThreeDot color={"#95a5a6"} size="small" /> : content}
+    </button>
+  );
 }

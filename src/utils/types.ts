@@ -12,3 +12,12 @@ export type TJobDetail = {
 };
 
 export type TInputType = "username" | "password";
+
+export type TEntry = {
+  company: string;
+  title: string;
+  employment_type: "PLJ" | "PLE";
+  location: string;
+  departement?: string;
+  job_description: string;
+};

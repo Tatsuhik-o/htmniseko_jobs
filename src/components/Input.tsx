@@ -1,7 +1,7 @@
 import { makeStyles } from "@mui/styles";
 import { type InputHTMLAttributes } from "react";
 import Icon from "@mdi/react";
-import { mdiAccount, mdiLock } from "@mdi/js";
+import { mdiAccount, mdiLock, mdiConsoleLine } from "@mdi/js";
 const useStyles = makeStyles({
   input: {
     height: "55px",
@@ -18,6 +18,7 @@ const useStyles = makeStyles({
       display: "flex",
       alignItems: "center",
       gap: "5px",
+      textTransform: "capitalize",
     },
     "& input": {
       width: "100%",
@@ -25,9 +26,10 @@ const useStyles = makeStyles({
       border: "none",
       backgroundColor: "#DADADA",
       paddingLeft: "50px",
-      color: "#96949D",
+      color: "black",
       fontFamily: "Inter",
       fontSize: "1rem",
+      fontWeight: "500",
     },
   },
 });
@@ -36,7 +38,7 @@ type TInput = {
   type: InputHTMLAttributes<HTMLInputElement>["type"];
   label: string;
   currentValue: string;
-  controllerFunction: React.Dispatch<React.SetStateAction<string>>;
+  controllerFunction: (value: string) => void;
 };
 
 export default function Input({
@@ -49,7 +51,16 @@ export default function Input({
   return (
     <div className={classes.input}>
       <label htmlFor={label}>
-        <Icon path={label === "Username" ? mdiAccount : mdiLock} size={1} />
+        <Icon
+          path={
+            label === "Username"
+              ? mdiAccount
+              : label === "password"
+              ? mdiLock
+              : mdiConsoleLine
+          }
+          size={1}
+        />
         {!currentValue && label}
       </label>
       <input

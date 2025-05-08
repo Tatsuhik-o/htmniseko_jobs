@@ -20,12 +20,8 @@ const useStyles = makeStyles({
   main_logic: (props: { mobileView: boolean | undefined }) => ({
     width: "100%",
     flex: "1",
-    padding: props.mobileView ? "0rem" : "2rem",
+    padding: props.mobileView ? "1rem" : "2rem",
     display: "flex",
-    "& > *": {
-      padding: "2rem",
-      borderRadius: "25px",
-    },
   }),
 });
 

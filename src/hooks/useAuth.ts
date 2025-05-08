@@ -25,11 +25,14 @@ export default function useAuth(
         const response = await fetch(url, options);
         if (response.ok) {
           setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     })();
-    return () => controller.abort();
   }, [url]);
 
-  return { isAuthenticated };
+  return isAuthenticated;
 }
