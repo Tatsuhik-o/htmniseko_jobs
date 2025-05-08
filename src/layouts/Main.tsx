@@ -6,16 +6,38 @@ import { useContext } from "react";
 import { AppContext } from "../utils/context";
 
 const useStyles = makeStyles({
-  main: {},
+  main: {
+    width: "100%",
+    maxWidth: "1440px",
+    height: "100%",
+    minHeight: (props: { mobileView: boolean | undefined }) =>
+      props.mobileView ? "calc(100vh - 0.5rem)" : "calc(100vh - 4.5rem)",
+    backgroundColor: "#F6F6F4",
+    borderRadius: "12px",
+    display: "flex",
+    flexDirection: "column",
+  },
+  main_logic: (props: { mobileView: boolean | undefined }) => ({
+    width: "100%",
+    flex: "1",
+    padding: props.mobileView ? "0rem" : "2rem",
+    display: "flex",
+    "& > *": {
+      padding: "2rem",
+      borderRadius: "25px",
+    },
+  }),
 });
 
 export default function Main() {
-  const classes = useStyles();
   const { mobileView } = useContext(AppContext);
+  const classes = useStyles({ mobileView });
   return (
     <div className={classes.main}>
       <Header />
-      <Outlet />
+      <div className={classes.main_logic}>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );

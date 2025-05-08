@@ -1,10 +1,40 @@
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
-  custom_button: {},
+  custom_button: (props: {
+    color: string;
+    bgColor: string;
+    pdT: number;
+    pdR: number;
+  }) => ({
+    color: props.color,
+    backgroundColor: props.bgColor,
+    padding: `${props.pdT}rem ${props.pdR}rem`,
+    maxWidth: "400px",
+    alignSelf: "center",
+    width: "100%",
+    border: "none",
+    cursor: "pointer",
+    fontFamily: "Source Code Pro",
+    fontSize: "1.1rem",
+  }),
 });
 
-export default function CustomButton() {
-  const classes = useStyles();
-  return <div className={classes.custom_button}>CustomButton</div>;
+type TCustomButton = {
+  content: string;
+  color: string;
+  bgColor: string;
+  pdT: number;
+  pdR: number;
+};
+
+export default function CustomButton({
+  content,
+  color,
+  bgColor,
+  pdT,
+  pdR,
+}: TCustomButton) {
+  const classes = useStyles({ color, bgColor, pdT, pdR });
+  return <button className={classes.custom_button}>{content}</button>;
 }

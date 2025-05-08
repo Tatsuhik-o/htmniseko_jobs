@@ -7,6 +7,7 @@ const useStyles = makeStyles({
       flexShrink: 0,
       height: "100%",
       width: "100%",
+      maxHeight: "25px",
     },
   },
 });

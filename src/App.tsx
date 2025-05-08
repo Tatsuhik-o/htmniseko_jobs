@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import useResponsiveView from "./hooks/useResponsiveView";
-import { useTheme } from "./hooks/useTheme";
 import Main from "./layouts/Main";
 import Careers from "./pages/Careers";
 import Login from "./pages/Login";
@@ -12,9 +11,8 @@ import { AppContext } from "./utils/context";
 
 function App() {
   const mobileView = useResponsiveView();
-  const { theme, setTheme } = useTheme();
   return (
-    <AppContext.Provider value={{ mobileView, theme, setTheme }}>
+    <AppContext.Provider value={{ mobileView }}>
       <BrowserRouter>
         <Routes>
           <Route element={<Main />}>
