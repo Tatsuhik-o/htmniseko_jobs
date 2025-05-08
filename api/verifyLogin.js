@@ -11,22 +11,21 @@ export default async function handler(req, res) {
       return res.status(405).json({ Message: "Method Not Allowed ..." });
     }
     const { username, password } = req.body;
-    console.log(username, password);
-    const usernameQuery = "SELECT id FROM userbase WHERE username = ?";
+    const usernameQuery = "SELECT * FROM userbase WHERE username = ?";
     const db = await dbConnection();
-    const [results] = await db.execute(usernameQuery, [username]);
+    const [results] = await db.execute(usernameQuery, [username.toLowerCase()]);
     if (!results.length) {
       return res.status(401).json({ Message: "Username Does Not Exists ..." });
     }
     const userPassword = results[0].password;
-    const passwordMatch = bcrypt.compare(password, userPassword);
+    const passwordMatch = await bcrypt.compare(password, userPassword);
     if (!passwordMatch) {
       return res.status(401).json({ Message: "Incorrect Password ..." });
     }
     const token = jwt.sign(
       { username, id: results[0].id },
       process.env.SECRET_KEY,
-      { expiresIn: "3h" }
+      { expiresIn: "1h" }
     );
     return res.status(200).json({ Message: "Login Success ...", token });
   } catch (err) {

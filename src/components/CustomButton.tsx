@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 });
 
 type TCustomButton = {
-  content: string;
+  content: any;
   color: string;
   bgColor: string;
   pdT: number;
