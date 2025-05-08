@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export async function dbConnetion() {
+export default async function dbConnetion() {
   return await mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
