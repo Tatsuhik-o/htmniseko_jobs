@@ -22,7 +22,7 @@ export default function WithAuth() {
     }
   }, [isAuthenticated, navigate]);
 
-  if (isAuthenticated === null) return <Loading />;
+  if (isAuthenticated !== true) return <Loading />;
 
   return (
     <div className={classes.with_auth}>
