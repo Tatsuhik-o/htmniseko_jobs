@@ -24,6 +24,9 @@ const useStyles = makeStyles({
       objectFit: "contain",
     },
   }),
+  social_icons_wrapper: {
+    maxWidth: "50%",
+  },
 });
 
 export default function Header() {
@@ -32,9 +35,13 @@ export default function Header() {
   return (
     <div className={classes.header}>
       <div className={classes.htm_logo}>
-        <img src="logo.webp" alt="" />
+        <img src="/logo.webp" alt="" />
       </div>
-      {!mobileView && <SocialIcons />}
+      {!mobileView && (
+        <div className={classes.social_icons_wrapper}>
+          <SocialIcons />
+        </div>
+      )}
     </div>
   );
 }

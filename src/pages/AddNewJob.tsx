@@ -42,6 +42,7 @@ const useStyles = makeStyles({
     fontFamily: "Inter",
     fontSize: "1rem",
     fontWeight: "500",
+    cursor: "pointer",
   },
   error_placeholder: {
     height: "35px",
