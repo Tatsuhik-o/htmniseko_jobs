@@ -40,7 +40,6 @@ export default async function handler(req, res) {
       employment_type,
       DOMPurify.sanitize(job_description),
     ]);
-    console.log(results.insertId);
     return res.status(200).json({
       Message: "Successfully Created New Entry ...",
       id: results.insertId,

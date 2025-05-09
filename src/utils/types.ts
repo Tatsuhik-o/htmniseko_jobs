@@ -3,17 +3,19 @@ export type TContext = {
 };
 
 export type TJobDetail = {
+  id?: number;
   company: string;
   title: string;
   location: string;
   departement?: string;
   employment_type: "PLJ" | "PLE";
-  job_details: string;
+  job_details?: string;
 };
 
 export type TInputType = "username" | "password";
 
 export type TEntry = {
+  id?: number;
   company: string;
   title: string;
   employment_type: "PLJ" | "PLE";

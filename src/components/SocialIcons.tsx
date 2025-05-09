@@ -5,11 +5,12 @@ import { mdiLinkedin, mdiTwitter, mdiFacebook } from "@mdi/js";
 const useStyles = makeStyles({
   social_icons: {
     height: "100%",
-    maxWidth: "50%",
+    width: "100%",
     padding: "1rem",
     gap: "10px",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
   },
   icon: {
     padding: "10px 15px",
