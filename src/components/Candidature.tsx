@@ -1,7 +1,6 @@
 import { makeStyles } from "@mui/styles";
 import CustomButton from "./CustomButton";
 import SocialIcons from "./SocialIcons";
-import type { TEntry } from "../utils/types";
 
 const useStyles = makeStyles({
   candidature_wrapper: {
@@ -59,7 +58,6 @@ const useStyles = makeStyles({
 type TCandidature = {
   id: number;
   tabletMode: boolean;
-  jobDetail: TEntry;
   isApplying: boolean;
   controllerFunction: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -67,12 +65,11 @@ type TCandidature = {
 export default function Candidature({
   id,
   tabletMode,
-  jobDetail,
   controllerFunction,
   isApplying,
 }: TCandidature) {
   const classes = useStyles();
-  console.log(jobDetail);
+
   return (
     <div className={classes.candidature_wrapper}>
       <div className={classes.candidature}>

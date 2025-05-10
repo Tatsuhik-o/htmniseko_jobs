@@ -39,7 +39,6 @@ export default function JobOffer() {
         <Candidature
           id={jobDetails[0].id || 0}
           tabletMode={tabletMode}
-          jobDetail={jobDetails[0]}
           controllerFunction={setIsApplying}
           isApplying={isApplying}
         />
