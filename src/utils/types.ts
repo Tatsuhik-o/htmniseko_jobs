@@ -23,3 +23,25 @@ export type TEntry = {
   departement?: string;
   job_description: string;
 };
+
+export type TApplication = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  province: string;
+  zipCode: string;
+  country: string;
+  date?: string | null;
+  pay?: string | null;
+  education?: string | null;
+  languageProficiency?: string | null;
+  hearingAboutUs?: string | null;
+  driverLicense?: "NO" | "Japanese" | "International" | null;
+  visaType?: "H" | "JWVA" | "JWV" | "JN" | null;
+  smoke?: boolean | null;
+  criminal?: boolean | null;
+  feedback?: string | null;
+};
