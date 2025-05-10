@@ -45,3 +45,8 @@ export type TApplication = {
   criminal?: boolean | null;
   feedback?: string | null;
 };
+
+export type TRadio = {
+  label: string;
+  radios: string[];
+};

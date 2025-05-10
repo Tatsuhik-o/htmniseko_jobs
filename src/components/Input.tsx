@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 type TInput = {
   type: InputHTMLAttributes<HTMLInputElement>["type"];
-  label: string;
+  label?: string;
   currentValue: string;
   controllerFunction: (value: string) => void;
   align?: string;

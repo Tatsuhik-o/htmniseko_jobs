@@ -1,4 +1,5 @@
 import type { TInputType } from "./types";
+import type { TRadio } from "./types";
 export function sanitizeInput(inputType: TInputType, input: string): boolean {
   const usernameRegex = /^(?![_.-])(?!.*[_.-][_.-])[a-zA-Z0-9_.-]+(?<![_.-])$/;
   const passwordRegex = /^(?=.*[&@!_.-])[a-zA-Z0-9&@!_.-]{8,25}$/;
@@ -7,6 +8,36 @@ export function sanitizeInput(inputType: TInputType, input: string): boolean {
     ? usernameRegex.test(input)
     : passwordRegex.test(input);
 }
+
+export const radiosInfo: TRadio[] = [
+  {
+    label: "Do you have a drivers licence?/自動車免許証はお持ちですか。",
+    radios: [
+      "Yes, I have Japanese Drivers licence. / 日本の自動車運転免許を持っています。",
+      "Yes, I have an international driver's license. / はい、国際自動車運転免許を持っています。",
+      "No, I don't have a drivers licence. / いいえ、運転免許は持っていません。",
+    ],
+  },
+  {
+    label:
+      "What visa would you work here on?/日本で働くためのビザの種類をお知らせください。",
+    radios: [
+      "Working Holiday Visa/ ワーキングホリデー",
+      "Japanese work visa (need to apply) /ビザの申請が必要",
+      "Japanese work visa (already received) / Japanese national/spouse of Japanese national / 既に日本の就労ビザを保有している",
+      "Japanese national/spouse of Japanese national / 日本国籍所持 または永住者または日本人の配偶者等",
+    ],
+  },
+  {
+    label: "Do you smoke?/たばこは吸いますか。",
+    radios: ["Yes", "No"],
+  },
+  {
+    label:
+      "Do you have any criminal convictions?/過去に犯罪履歴をお持ちですか。",
+    radios: ["Yes", "No"],
+  },
+];
 
 export const countries: string[] = [
   "Afghanistan",
