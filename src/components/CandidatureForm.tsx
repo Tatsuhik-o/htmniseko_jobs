@@ -163,7 +163,8 @@ export default function CandidatureForm() {
     }
   };
 
-  const handleApplication = () => {
+  const handleApplication = (e: React.FormEvent) => {
+    e.preventDefault();
     setIsApplying(true);
     let timer: number = setTimeout(() => {
       setIsApplying(false);
@@ -187,7 +188,7 @@ export default function CandidatureForm() {
   };
 
   return (
-    <div className={classes.candidature_form}>
+    <form className={classes.candidature_form} onSubmit={handleApplication}>
       <div className={classes.group}>
         <Input
           label="First Name"
@@ -364,7 +365,7 @@ export default function CandidatureForm() {
           );
         })}
       </div>
-      <div className={classes.is_applying} onClick={handleApplication}>
+      <div className={classes.is_applying}>
         <CustomButton
           content="Submit Application"
           color="#ffffff"
@@ -374,6 +375,6 @@ export default function CandidatureForm() {
           state={isApplying}
         />
       </div>
-    </div>
+    </form>
   );
 }
