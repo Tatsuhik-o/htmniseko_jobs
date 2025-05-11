@@ -3,12 +3,12 @@ import { type InputHTMLAttributes } from "react";
 import Icon from "@mdi/react";
 import { mdiAccount, mdiLock, mdiConsoleLine } from "@mdi/js";
 const useStyles = makeStyles({
-  input: {
+  input: (props: { align: string }) => ({
     height: "55px",
     width: "100%",
     maxWidth: "400px",
-    alignSelf: "center",
     position: "relative",
+    alignSelf: props.align,
     "& label": {
       position: "absolute",
       top: "50%",
@@ -31,14 +31,15 @@ const useStyles = makeStyles({
       fontSize: "1rem",
       fontWeight: "500",
     },
-  },
+  }),
 });
 
 type TInput = {
   type: InputHTMLAttributes<HTMLInputElement>["type"];
-  label: string;
+  label?: string;
   currentValue: string;
   controllerFunction: (value: string) => void;
+  align?: string;
 };
 
 export default function Input({
@@ -46,8 +47,9 @@ export default function Input({
   label,
   currentValue,
   controllerFunction,
+  align = "center",
 }: TInput) {
-  const classes = useStyles();
+  const classes = useStyles({ align });
   return (
     <div className={classes.input}>
       <label htmlFor={label}>

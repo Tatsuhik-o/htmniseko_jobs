@@ -8,6 +8,7 @@ import JobOffer from "./pages/JobOffer";
 import WithAuth from "./layouts/WithAuth";
 import AddNewJob from "./pages/AddNewJob";
 import { AppContext } from "./utils/context";
+import Success from "./pages/Success";
 
 function App() {
   const mobileView = useResponsiveView();
@@ -18,6 +19,7 @@ function App() {
           <Route element={<Main />}>
             <Route path="*" element={<Careers />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/success" element={<Success />} />
             <Route path="/careers/:job_id" element={<JobOffer />} />
             <Route element={<WithAuth />}>
               <Route path="/add_new_job" element={<AddNewJob />} />
