@@ -55,9 +55,10 @@ export default function Login() {
   const [password, setPassword] = useState<string>("");
   const [awaitingLogin, setAwaitingLogin] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { error, setError } = useError(1500);
+  const { error, setError } = useError(3000);
   const isAuthenticated = useAuth();
   const avatar = useAvatar(250);
+  const [count, setCount] = useState<number>(0);
 
   useLayoutEffect(() => {
     if (isAuthenticated === true) {
@@ -92,7 +93,10 @@ export default function Login() {
         localStorage.setItem("token", data.token);
         navigate("/add_new_job");
       } else {
-        setError("Username or Password is Incorrect ...");
+        setCount((count) => count + 1);
+        count > 3
+          ? setError("Try Guillermo:Guillermo@001")
+          : setError("Username or Password is Incorrect ...");
       }
       setAwaitingLogin(false);
     } catch (err) {
