@@ -27,9 +27,14 @@ const useStyles = makeStyles({
 type TRadioGroup = {
   content: string;
   radios: string[];
+  holderForNow: any;
 };
 
-export default function RadioGroup({ content, radios }: TRadioGroup) {
+export default function RadioGroup({
+  content,
+  radios,
+  holderForNow,
+}: TRadioGroup) {
   const classes = useStyles();
   const [isSelected, setIsSelected] = useState<string>("");
 
@@ -46,7 +51,10 @@ export default function RadioGroup({ content, radios }: TRadioGroup) {
                 fontWeight: isSelected === radioElement ? "600" : "400",
               }}
               key={idx}
-              onClick={() => setIsSelected(radioElement)}
+              onClick={() => {
+                setIsSelected(radioElement);
+                holderForNow(radioElement);
+              }}
             >
               <input
                 type="radio"
@@ -55,7 +63,10 @@ export default function RadioGroup({ content, radios }: TRadioGroup) {
                 id={`${content}-${radioElement}`}
                 name={content}
                 checked={radioElement === isSelected}
-                onChange={(e) => setIsSelected(e.target.value)}
+                onChange={(e) => {
+                  setIsSelected(e.target.value);
+                  holderForNow(e.target.value);
+                }}
               />
               {radioElement}
             </label>

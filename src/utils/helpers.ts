@@ -17,6 +17,7 @@ export const radiosInfo: TRadio[] = [
       "Yes, I have an international driver's license. / はい、国際自動車運転免許を持っています。",
       "No, I don't have a drivers licence. / いいえ、運転免許は持っていません。",
     ],
+    type: "driverLicense",
   },
   {
     label:
@@ -27,15 +28,18 @@ export const radiosInfo: TRadio[] = [
       "Japanese work visa (already received) / Japanese national/spouse of Japanese national / 既に日本の就労ビザを保有している",
       "Japanese national/spouse of Japanese national / 日本国籍所持 または永住者または日本人の配偶者等",
     ],
+    type: "visaType",
   },
   {
     label: "Do you smoke?/たばこは吸いますか。",
     radios: ["Yes", "No"],
+    type: "smoke",
   },
   {
     label:
       "Do you have any criminal convictions?/過去に犯罪履歴をお持ちですか。",
     radios: ["Yes", "No"],
+    type: "criminal",
   },
 ];
 

@@ -12,55 +12,48 @@ export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ Message: "Method Is Not Allowed ..." });
   }
-  const requiredFields = [
-    "firstName",
-    "lastName",
-    "email",
-    "country",
-    "resume",
-    "cover",
-  ];
-  const { body } = req;
-  for (let key of requiredFields) {
-    if (typeof body[key] === "undefined") {
-      return res.status(422).json({ Message: `Missing parameter: ${key}` });
-    }
-  }
-  const {
-    firstName,
-    lastName,
-    email,
-    phone,
-    address,
-    city,
-    province,
-    zipCode,
-    country,
-    date,
-    pay,
-    education,
-    languageProficiency,
-    hearingAboutUs,
-    driverLicense,
-    visaType,
-    smoke,
-    criminal,
-    feedback,
-    resume,
-    cover,
-  } = body;
-
-  console.log(firstName, lastName, email, resume, cover, country);
-
-  const form = new formidable.IncomingForm({ maxFileSize: 2 * 1024 * 1024 });
+  const form = formidable({
+    maxFileSize: 2 * 1024 * 1024,
+  });
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
       console.error("Form parsing error:", err);
       return res.status(500).json({ error: "Form parsing error" });
     }
-    const { name, email, message } = fields;
-    const attachment = files.attachment;
+
+    const requiredFields = ["firstName", "lastName", "email", "country"];
+    for (let key of requiredFields) {
+      if (!fields[key]) {
+        return res.status(422).json({ Message: `Missing parameter: ${key}` });
+      }
+    }
+
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+      city,
+      province,
+      zipCode,
+      country,
+      date,
+      pay,
+      education,
+      languageProficiency,
+      hearingAboutUs,
+      driverLicense,
+      visaType,
+      smoke,
+      criminal,
+      feedback,
+    } = fields;
+
+    const { attachement } = files;
+    const resume = attachement?.[0];
+    const cover = attachement?.[1];
 
     try {
       const transporter = nodemailer.createTransport({
@@ -73,19 +66,49 @@ export default async function handler(req, res) {
         },
       });
 
+      const message = `
+          First Name: ${firstName},
+          Last Name: ${lastName},
+          Email: ${email},
+          Phone: ${phone},
+          Address: ${address},
+          City: ${city},
+          Province: ${province},
+          Zip Code: ${zipCode},
+          Country: ${country},
+          Salary Expectation: ${pay} yen,
+          Language Proficiency: ${languageProficiency},
+          Heard About Us From: ${hearingAboutUs},
+          Driver License: ${driverLicense},
+          Visa Type: ${visaType},
+          Smoke: ${smoke},
+          Criminal: ${criminal},
+          Feedback: ${feedback},
+      `;
+
       const mailOptions = {
-        from: `"${name}" <${email}>`,
+        from: `"${firstName} ${lastName}" <${email}>`,
         to: process.env.MAIL_RECEIVER,
-        subject: "New Form Submission",
+        subject: `New Application From - ${firstName} ${lastName}`,
         text: message,
-        attachments: attachment
-          ? [
-              {
-                filename: attachment.originalFilename,
-                content: fs.createReadStream(attachment.filepath),
-              },
-            ]
-          : [],
+        attachments: [
+          ...(resume
+            ? [
+                {
+                  filename: resume.originalFilename,
+                  content: fs.createReadStream(resume.filepath),
+                },
+              ]
+            : []),
+          ...(cover
+            ? [
+                {
+                  filename: cover.originalFilename,
+                  content: fs.createReadStream(cover.filepath),
+                },
+              ]
+            : []),
+        ],
       };
 
       await transporter.sendMail(mailOptions);

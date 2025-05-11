@@ -9,6 +9,7 @@ import { mdiUploadOutline } from "@mdi/js";
 import RadioGroup from "./RadioGroup";
 import CustomButton from "./CustomButton";
 import useError from "../hooks/useError";
+import { useNavigate } from "react-router-dom";
 
 const useStyle = makeStyles({
   candidature_form: {
@@ -169,6 +170,7 @@ export default function CandidatureForm() {
   const classes = useStyle({ mobileView });
   const [isApplying, setIsApplying] = useState<boolean>(false);
   const { error, setError } = useError(2000);
+  const navigate = useNavigate();
 
   const handleResumeClick = () => {
     if (resumeInputRef.current) {
@@ -211,7 +213,12 @@ export default function CandidatureForm() {
         "http://localhost:3000/api/receiveApplication",
         options
       );
-      console.log(response.status);
+      if (response.ok) {
+        setIsApplying(false);
+        navigate("/success", { state: { fromRedirect: true } });
+        return;
+      }
+      setIsApplying(false);
     } catch (err) {
       console.log(err);
       setIsApplying(false);
@@ -410,6 +417,12 @@ export default function CandidatureForm() {
               content={radio.label}
               radios={radio.radios}
               key={radio.label}
+              holderForNow={(value: string) =>
+                dispatch({
+                  type: radio.type as keyof TApplication,
+                  payload: value,
+                })
+              }
             />
           );
         })}

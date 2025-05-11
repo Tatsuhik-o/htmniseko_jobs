@@ -49,4 +49,5 @@ export type TApplication = {
 export type TRadio = {
   label: string;
   radios: string[];
+  type: string;
 };
