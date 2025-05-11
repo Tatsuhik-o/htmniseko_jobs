@@ -8,6 +8,7 @@ import Icon from "@mdi/react";
 import { mdiUploadOutline } from "@mdi/js";
 import RadioGroup from "./RadioGroup";
 import CustomButton from "./CustomButton";
+import useError from "../hooks/useError";
 
 const useStyle = makeStyles({
   candidature_form: {
@@ -101,7 +102,17 @@ const useStyle = makeStyles({
     maxWidth: (props: { mobileView: boolean | undefined }) =>
       props.mobileView ? "100%" : "75%",
     alignSelf: "center",
+    display: "flex",
+    justifyContent: "center",
+  },
+  error: {
+    width: "100%",
+    height: "20px",
+    alignSelf: "center",
+    color: "crimson",
+    fontFamily: "Source Code Pro",
     marginTop: "25px",
+    textTransform: "capitalize",
     display: "flex",
     justifyContent: "center",
   },
@@ -129,6 +140,13 @@ const newApplication: TApplication = {
   feedback: null,
 };
 
+const requiredFields: (keyof TApplication)[] = [
+  "firstName",
+  "lastName",
+  "email",
+  "country",
+];
+
 type TAction = {
   type: keyof typeof newApplication;
   payload: string;
@@ -146,10 +164,11 @@ export default function CandidatureForm() {
   const { mobileView } = useContext(AppContext);
   const resumeInputRef = useRef<HTMLInputElement>(null);
   const coverInputRef = useRef<HTMLInputElement>(null);
-  const [resume, setResume] = useState("No File Chosen");
-  const [cover, setCover] = useState("No File Chosen");
+  const [resume, setResume] = useState<File | string>("No File Chosen");
+  const [cover, setCover] = useState<File | string>("No File Chosen");
   const classes = useStyle({ mobileView });
   const [isApplying, setIsApplying] = useState<boolean>(false);
+  const { error, setError } = useError(2000);
 
   const handleResumeClick = () => {
     if (resumeInputRef.current) {
@@ -163,28 +182,54 @@ export default function CandidatureForm() {
     }
   };
 
-  const handleApplication = (e: React.FormEvent) => {
+  const handleApplication = async (e: React.FormEvent) => {
     e.preventDefault();
+    for (let required of requiredFields) {
+      if (!state[required as keyof TApplication]) {
+        setError(`${required} Is Required`);
+        return;
+      }
+    }
+    if (!(resume instanceof File) || !(cover instanceof File)) {
+      setError("Both Resume & Cover Are Required");
+      return;
+    }
     setIsApplying(true);
-    let timer: number = setTimeout(() => {
+    const formData = new FormData();
+    for (let key in state) {
+      formData.append(key, String(state[key as keyof TApplication] || ""));
+    }
+    formData.append("attachement", resume);
+    formData.append("attachement", cover);
+
+    try {
+      const options = {
+        method: "POST",
+        body: formData,
+      };
+      const response = await fetch(
+        "http://localhost:3000/api/receiveApplication",
+        options
+      );
+      console.log(response.status);
+    } catch (err) {
+      console.log(err);
       setIsApplying(false);
-    }, 3000);
-    return () => {
-      clearTimeout(timer);
-    };
+      setError("Failed to Send Application");
+    }
   };
 
   interface FileChangeEvent extends React.ChangeEvent<HTMLInputElement> {
     target: HTMLInputElement & { files: FileList | null };
   }
 
-  const handleResumeChange = (event: FileChangeEvent): void => {
-    const file = event.target.files?.[0];
-    setResume(file ? file.name : "No File Selected");
+  const handleResumeChange = (e: FileChangeEvent): void => {
+    const file = e.target.files?.[0];
+    setResume(file ? file : "No File Selected");
   };
-  const handleCoverChange = (event: FileChangeEvent): void => {
-    const file = event.target.files?.[0];
-    setCover(file ? file.name : "No File Selected");
+  const handleCoverChange = (e: FileChangeEvent): void => {
+    const file = e.target.files?.[0];
+    setCover(file ? file : "No File Selected");
   };
 
   return (
@@ -294,7 +339,9 @@ export default function CandidatureForm() {
           <button onClick={handleCoverClick}>
             <Icon path={mdiUploadOutline} size={1} /> Choose File
           </button>
-          <span>{cover}</span>
+          <span style={{ color: "crimson" }}>
+            {cover instanceof File ? cover.name : "No File Chosen"}
+          </span>
         </div>
       </div>
       <div className={classes.resume}>
@@ -310,7 +357,9 @@ export default function CandidatureForm() {
           <button onClick={handleResumeClick}>
             <Icon path={mdiUploadOutline} size={1} /> Choose File
           </button>
-          <span>{resume}</span>
+          <span style={{ color: "crimson" }}>
+            {resume instanceof File ? resume.name : "No File Chosen"}
+          </span>
         </div>
       </div>
       <Input
@@ -365,6 +414,7 @@ export default function CandidatureForm() {
           );
         })}
       </div>
+      <div className={classes.error}>{error}</div>
       <div className={classes.is_applying}>
         <CustomButton
           content="Submit Application"
