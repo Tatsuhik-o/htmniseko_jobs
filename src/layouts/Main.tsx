@@ -10,9 +10,12 @@ const useStyles = makeStyles({
     width: "100%",
     maxWidth: "1440px",
     height: "100%",
-    minHeight: (props: { mobileView: boolean | undefined }) =>
-      props.mobileView ? "calc(100vh - 0.5rem)" : "calc(100vh - 4.5rem)",
-    backgroundColor: "#F6F6F4",
+    minHeight: (props: {
+      mobileView: boolean | undefined;
+      currentTheme: "light" | "dark";
+    }) => (props.mobileView ? "calc(100vh - 0.5rem)" : "calc(100vh - 4.5rem)"),
+    backgroundColor: (props: { currentTheme: "light" | "dark" }) =>
+      props.currentTheme === "light" ? "#F6F6F4" : "#1A1A1A",
     borderRadius: "12px",
     display: "flex",
     flexDirection: "column",
@@ -26,8 +29,8 @@ const useStyles = makeStyles({
 });
 
 export default function Main() {
-  const { mobileView } = useContext(AppContext);
-  const classes = useStyles({ mobileView });
+  const { mobileView, currentTheme } = useContext(AppContext);
+  const classes = useStyles({ mobileView, currentTheme });
   return (
     <div className={classes.main}>
       <Header />

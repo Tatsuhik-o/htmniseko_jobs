@@ -1,6 +1,8 @@
 import { makeStyles } from "@mui/styles";
-import Icon from "@mdi/react";
-import { mdiLinkedin, mdiTwitter, mdiFacebook } from "@mdi/js";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import { Box } from "@mui/material";
 
 const useStyles = makeStyles({
   social_icons: {
@@ -26,7 +28,7 @@ const useStyles = makeStyles({
       alignItems: "center",
       cursor: "pointer",
       textDecoration: "none",
-      color: "#48413F",
+      color: "inherit",
     },
   },
 });
@@ -35,24 +37,24 @@ export default function SocialIcons() {
   const classes = useStyles();
   return (
     <div className={classes.social_icons}>
-      <div className={classes.icon}>
+      <Box className={classes.icon}>
         <a
           href="https://www.linkedin.com/company/hokkaido-tourism-management/"
           target="_blank"
         >
-          <Icon path={mdiLinkedin} size={0.8} />
+          <LinkedInIcon fontSize="small" />
         </a>
-      </div>
-      <div className={classes.icon}>
+      </Box>
+      <Box className={classes.icon}>
         <a href="https://x.com/nisekojobs" target="_blank">
-          <Icon path={mdiTwitter} size={0.8} />
+          <TwitterIcon fontSize="small" />
         </a>
-      </div>
-      <div className={classes.icon}>
+      </Box>
+      <Box className={classes.icon}>
         <a href="https://www.facebook.com/htmniseko/" target="_blank">
-          <Icon path={mdiFacebook} size={0.8} />
+          <FacebookIcon fontSize="small" />
         </a>
-      </div>
+      </Box>
     </div>
   );
 }

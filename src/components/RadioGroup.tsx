@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
 
@@ -40,8 +41,10 @@ export default function RadioGroup({
 
   return (
     <div className={classes.radio_group}>
-      <p style={{ fontWeight: "600" }}>{content}</p>
-      <div className={classes.radios} id="radios">
+      <Typography variant="subtitle2" style={{ fontWeight: "600" }}>
+        {content}
+      </Typography>
+      <Box sx={{ border: "none" }} className={classes.radios} id="radios">
         {radios.map((radioElement, idx) => {
           return (
             <label
@@ -58,7 +61,6 @@ export default function RadioGroup({
             >
               <input
                 type="radio"
-                key={idx}
                 value={radioElement}
                 id={`${content}-${radioElement}`}
                 name={content}
@@ -68,11 +70,13 @@ export default function RadioGroup({
                   holderForNow(e.target.value);
                 }}
               />
-              {radioElement}
+              <Typography variant="subtitle2" component="span">
+                {radioElement}
+              </Typography>
             </label>
           );
         })}
-      </div>
+      </Box>
     </div>
   );
 }

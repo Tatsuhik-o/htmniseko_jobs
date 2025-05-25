@@ -2,12 +2,12 @@ import { makeStyles } from "@mui/styles";
 import useFetch from "../hooks/useFetch";
 import Loading from "../components/Loading";
 import JobCard from "../components/JobCard";
+import { Box, Typography } from "@mui/material";
 
 const useStyles = makeStyles({
   careers: {
     height: "100%",
     width: "100%",
-    backgroundColor: "white",
     padding: "2rem",
     borderRadius: "25px",
   },
@@ -34,17 +34,17 @@ export default function Careers() {
   if (isLoading) return <Loading />;
 
   return (
-    <div className={classes.careers}>
+    <Box className={classes.careers}>
       <div className={classes.title_card}>
-        <h2>Current Openings</h2>
-        <p>
+        <Typography variant="h5">Current Openings</Typography>
+        <Typography variant="subtitle2">
           Thanks for checking out our job openings. See something that interests
           you? Apply here.
-        </p>
+        </Typography>
       </div>
       {jobDetails.map((jobOffer) => {
         return <JobCard jobOffer={jobOffer} key={jobOffer.id} />;
       })}
-    </div>
+    </Box>
   );
 }

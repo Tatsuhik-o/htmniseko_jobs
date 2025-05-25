@@ -1,6 +1,7 @@
 import { makeStyles } from "@mui/styles";
 import CustomButton from "./CustomButton";
 import SocialIcons from "./SocialIcons";
+import { Box } from "@mui/material";
 
 const useStyles = makeStyles({
   candidature_wrapper: {
@@ -72,7 +73,7 @@ export default function Candidature({
 
   return (
     <div className={classes.candidature_wrapper}>
-      <div className={classes.candidature}>
+      <Box className={classes.candidature}>
         <div onClick={() => controllerFunction((prev) => !prev)}>
           <CustomButton
             color={isApplying ? "#145288" : "#ffffff"}
@@ -96,7 +97,7 @@ export default function Candidature({
           />
         </div>
         <SocialIcons />
-      </div>
+      </Box>
       {!tabletMode && <div className={classes.other_info}></div>}
     </div>
   );

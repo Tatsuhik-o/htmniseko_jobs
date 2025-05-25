@@ -1,5 +1,8 @@
+import { Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { ThreeDot } from "react-loading-indicators";
+import { CircularProgress } from "@mui/material";
+import { useContext } from "react";
+import { AppContext } from "../utils/context";
 const useStyles = makeStyles({
   loading: {
     width: "100%",
@@ -12,9 +15,16 @@ const useStyles = makeStyles({
 
 export default function Loading() {
   const classes = useStyles();
+  const { themeMode } = useContext(AppContext);
   return (
-    <div className={classes.loading}>
-      <ThreeDot color={"#95a5a6"} size="medium" />
-    </div>
+    <Box className={classes.loading}>
+      <CircularProgress
+        sx={{
+          width: "50px",
+          height: "2px",
+          color: `${themeMode.palette.primary.main} !important`,
+        }}
+      />
+    </Box>
   );
 }

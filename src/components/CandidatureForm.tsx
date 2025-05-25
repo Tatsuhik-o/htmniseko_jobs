@@ -10,6 +10,7 @@ import RadioGroup from "./RadioGroup";
 import CustomButton from "./CustomButton";
 import useError from "../hooks/useError";
 import { useNavigate } from "react-router-dom";
+import { Box, FormControl, Typography } from "@mui/material";
 
 const useStyle = makeStyles({
   candidature_form: {
@@ -86,8 +87,6 @@ const useStyle = makeStyles({
     maxWidth: "500px",
     width: "100%",
     border: "none",
-    backgroundColor: "#DADADA",
-    color: "black",
     fontFamily: "Inter",
     fontSize: "1rem",
     fontWeight: "500",
@@ -162,7 +161,7 @@ function reducer(state: TApplication, action: TAction): TApplication {
 
 export default function CandidatureForm() {
   const [state, dispatch] = useReducer(reducer, newApplication);
-  const { mobileView } = useContext(AppContext);
+  const { mobileView, themeMode, currentTheme } = useContext(AppContext);
   const resumeInputRef = useRef<HTMLInputElement>(null);
   const coverInputRef = useRef<HTMLInputElement>(null);
   const [resume, setResume] = useState<File | string>("No File Chosen");
@@ -240,8 +239,14 @@ export default function CandidatureForm() {
   };
 
   return (
-    <form className={classes.candidature_form} onSubmit={handleApplication}>
-      <div className={classes.group}>
+    <FormControl
+      className={classes.candidature_form}
+      onSubmit={handleApplication}
+      sx={{
+        bgcolor: themeMode.palette.background.default,
+      }}
+    >
+      <Box className={classes.group} sx={{ border: "none" }}>
         <Input
           label="First Name"
           currentValue={state.firstName}
@@ -260,7 +265,7 @@ export default function CandidatureForm() {
           type="text"
           align="flex-start"
         />
-      </div>
+      </Box>
       <Input
         label="Email"
         currentValue={state.email}
@@ -323,6 +328,10 @@ export default function CandidatureForm() {
         value={state.country}
         onChange={(e) => dispatch({ type: "country", payload: e.target.value })}
         className={classes.country}
+        style={{
+          backgroundColor: currentTheme === "light" ? "#DADADA" : "#1A1A1A",
+          color: currentTheme === "light" ? "#1A1A1A" : "#DADADA",
+        }}
       >
         {countries.map((country) => {
           return (
@@ -333,7 +342,7 @@ export default function CandidatureForm() {
         })}
       </select>
       <div className={classes.divider}></div>
-      <div className={classes.cover}>
+      <Box className={classes.cover} sx={{ border: "none" }}>
         <label htmlFor="cover">Cover Letter*</label>
         <div className={classes.resume_input}>
           <input
@@ -343,15 +352,20 @@ export default function CandidatureForm() {
             style={{ display: "none" }}
             id="cover"
           />
-          <button onClick={handleCoverClick}>
+          <button
+            onClick={handleCoverClick}
+            style={{
+              backgroundColor: currentTheme === "light" ? "#DADADA" : "#1A1A1A",
+            }}
+          >
             <Icon path={mdiUploadOutline} size={1} /> Choose File
           </button>
           <span style={{ color: "crimson" }}>
             {cover instanceof File ? cover.name : "No File Chosen"}
           </span>
         </div>
-      </div>
-      <div className={classes.resume}>
+      </Box>
+      <Box className={classes.resume} sx={{ border: "none" }}>
         <label htmlFor="resume">Resume*</label>
         <div className={classes.resume_input}>
           <input
@@ -361,14 +375,19 @@ export default function CandidatureForm() {
             style={{ display: "none" }}
             id="resume"
           />
-          <button onClick={handleResumeClick}>
+          <button
+            onClick={handleResumeClick}
+            style={{
+              backgroundColor: currentTheme === "light" ? "#DADADA" : "#1A1A1A",
+            }}
+          >
             <Icon path={mdiUploadOutline} size={1} /> Choose File
           </button>
           <span style={{ color: "crimson" }}>
             {resume instanceof File ? resume.name : "No File Chosen"}
           </span>
         </div>
-      </div>
+      </Box>
       <Input
         label="Salary Expectations"
         currentValue={state.pay || ""}
@@ -388,6 +407,10 @@ export default function CandidatureForm() {
         onChange={(e) =>
           dispatch({ type: "languageProficiency", payload: e.target.value })
         }
+        style={{
+          backgroundColor: currentTheme === "light" ? "#DADADA" : "#1A1A1A",
+          color: currentTheme === "light" ? "#1A1A1A" : "#DADADA",
+        }}
       ></textarea>
       <textarea
         name="hearingAboutUs"
@@ -398,6 +421,10 @@ export default function CandidatureForm() {
         onChange={(e) =>
           dispatch({ type: "hearingAboutUs", payload: e.target.value })
         }
+        style={{
+          backgroundColor: currentTheme === "light" ? "#DADADA" : "#1A1A1A",
+          color: currentTheme === "light" ? "#1A1A1A" : "#DADADA",
+        }}
       ></textarea>
       <textarea
         name="feedback"
@@ -408,6 +435,10 @@ export default function CandidatureForm() {
         onChange={(e) =>
           dispatch({ type: "feedback", payload: e.target.value })
         }
+        style={{
+          backgroundColor: currentTheme === "light" ? "#DADADA" : "#1A1A1A",
+          color: currentTheme === "light" ? "#1A1A1A" : "#DADADA",
+        }}
       ></textarea>
       <div className={classes.divider}></div>
       <div className={classes.radios}>
@@ -427,17 +458,17 @@ export default function CandidatureForm() {
           );
         })}
       </div>
-      <div className={classes.error}>{error}</div>
-      <div className={classes.is_applying}>
+      <Typography variant="subtitle2" className={classes.error}>
+        {error}
+      </Typography>
+      <div className={classes.is_applying} onClick={handleApplication}>
         <CustomButton
           content="Submit Application"
-          color="#ffffff"
-          bgColor="#424242"
           pdR={3}
           pdT={1}
           state={isApplying}
         />
       </div>
-    </form>
+    </FormControl>
   );
 }

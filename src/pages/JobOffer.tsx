@@ -6,6 +6,7 @@ import Candidature from "../components/Candidature";
 import JobDetail from "../components/JobDetail";
 import useTabletMode from "../hooks/useTabletMode";
 import { useState } from "react";
+import { Box } from "@mui/material";
 
 const useStyles = makeStyles({
   job_offer: {
@@ -28,7 +29,10 @@ export default function JobOffer() {
   );
   if (isLoading) return <Loading />;
   return (
-    <div className={classes.job_offer}>
+    <Box
+      className={classes.job_offer}
+      sx={{ border: "none", bgcolor: "inherit" }}
+    >
       <JobDetail
         tabletMode={tabletMode}
         jobDetail={jobDetails[0]}
@@ -43,6 +47,6 @@ export default function JobOffer() {
           isApplying={isApplying}
         />
       )}
-    </div>
+    </Box>
   );
 }

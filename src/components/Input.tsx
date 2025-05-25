@@ -1,7 +1,9 @@
 import { makeStyles } from "@mui/styles";
-import { type InputHTMLAttributes } from "react";
+import { useContext, type InputHTMLAttributes } from "react";
 import Icon from "@mdi/react";
 import { mdiAccount, mdiLock, mdiConsoleLine } from "@mdi/js";
+import { Box } from "@mui/material";
+import { AppContext } from "../utils/context";
 const useStyles = makeStyles({
   input: (props: { align: string }) => ({
     height: "55px",
@@ -50,8 +52,9 @@ export default function Input({
   align = "center",
 }: TInput) {
   const classes = useStyles({ align });
+  const { currentTheme } = useContext(AppContext);
   return (
-    <div className={classes.input}>
+    <Box className={classes.input}>
       <label htmlFor={label}>
         <Icon
           path={
@@ -71,7 +74,11 @@ export default function Input({
         onChange={(e) => controllerFunction(e.target.value)}
         id={label}
         autoComplete="on"
+        style={{
+          backgroundColor: currentTheme === "light" ? "#DADADA" : "#1A1A1A",
+          color: currentTheme === "light" ? "#1A1A1A" : "#DADADA",
+        }}
       />
-    </div>
+    </Box>
   );
 }

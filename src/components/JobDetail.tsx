@@ -7,6 +7,7 @@ import Icon from "@mdi/react";
 import { mdiChevronLeft } from "@mdi/js";
 import CustomButton from "./CustomButton";
 import CandidatureForm from "./CandidatureForm";
+import { Box, Typography } from "@mui/material";
 
 const useStyle = makeStyles({
   job_detail: {
@@ -115,8 +116,9 @@ export default function JobDetail({
   const { mobileView } = useContext(AppContext);
   const classes = useStyle({ mobileView });
   const departement = jobDetail.location.split("-")[0];
+
   return (
-    <div className={classes.job_detail}>
+    <Box className={classes.job_detail}>
       <div className={classes.back_to_jobs}>
         <Link to={"/"}>
           <Icon path={mdiChevronLeft} size={1} /> Job Openings
@@ -124,10 +126,12 @@ export default function JobDetail({
       </div>
       <div className={classes.head_info}>
         <div className={classes.job_head_info}>
-          <div className={classes.title}>
+          <Typography variant="h5" className={classes.title}>
             {jobDetail.company} - {jobDetail.title}
-          </div>
-          <div className={classes.location}>{jobDetail.location}</div>
+          </Typography>
+          <Typography variant="subtitle2" className={classes.location}>
+            {jobDetail.location}
+          </Typography>
         </div>
         {tabletMode && (
           <div
@@ -135,16 +139,15 @@ export default function JobDetail({
             onClick={() => controllerFunction((prev) => !prev)}
           >
             <CustomButton
-              color={isApplying ? "#145288" : "#ffffff"}
               content={
                 isApplying ? "View Job Description" : "Apply For This Job"
               }
-              bgColor={isApplying ? "#ffffff" : "#145288"}
               pdR={1.5}
               pdT={1}
               state={false}
               borderRadius={25}
               maxWidth={1000}
+              customVariant={isApplying ? "outlined" : "contained"}
             />
           </div>
         )}
@@ -173,25 +176,25 @@ export default function JobDetail({
       {isApplying ? (
         <CandidatureForm />
       ) : (
-        <div
+        <Box
           className={classes.job_description}
           dangerouslySetInnerHTML={{ __html: jobDetail.job_description }}
-        ></div>
+          sx={{ border: "none" }}
+        ></Box>
       )}
       {tabletMode && !isApplying && (
         <div onClick={() => controllerFunction((prev) => !prev)}>
           <CustomButton
-            color={isApplying ? "#145288" : "#ffffff"}
             content={isApplying ? "View Job Description" : "Apply For This Job"}
-            bgColor={isApplying ? "#ffffff" : "#145288"}
             pdR={1.5}
             pdT={1}
             state={false}
             borderRadius={25}
             maxWidth={1000}
+            customVariant={isApplying ? "outlined" : "contained"}
           />
         </div>
       )}
-    </div>
+    </Box>
   );
 }
