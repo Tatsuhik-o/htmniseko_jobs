@@ -24,7 +24,7 @@ export default function JobOffer() {
   const [isApplying, setIsApplying] = useState<boolean>(false);
 
   const { jobDetails, isLoading } = useFetch(
-    "http://localhost:3000/api/fetchJobDetails",
+    "https://htmniseko-jobs.vercel.app/api/fetchJobDetails",
     Number(job_id)
   );
   if (isLoading) return <Loading />;

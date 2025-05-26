@@ -22,7 +22,7 @@ export default function Loading() {
         sx={{
           width: "50px",
           height: "2px",
-          color: `${themeMode.palette.primary.main} !important`,
+          color: `${themeMode?.palette.primary.main} !important`,
         }}
       />
     </Box>

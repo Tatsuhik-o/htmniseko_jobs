@@ -9,6 +9,7 @@ import useError from "../hooks/useError";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Loading from "../components/Loading";
+import { Box, Typography } from "@mui/material";
 
 const useStyles = makeStyles({
   login: {
@@ -80,13 +81,16 @@ export default function Login() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3000/api/verifyLogin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        "https://htmniseko-jobs.vercel.app/api/verifyLogin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -112,7 +116,9 @@ export default function Login() {
           <div className={classes.avatar}>
             <img src={avatar} alt="" />
           </div>
-          <div className={classes.error}>{error}</div>
+          <Typography variant="subtitle2" className={classes.error}>
+            {error}
+          </Typography>
           <form onSubmit={handleSubmit} name="login">
             <Input
               type="text"
@@ -126,14 +132,24 @@ export default function Login() {
               currentValue={password}
               controllerFunction={setPassword}
             />
-            <CustomButton
-              content="Login"
-              color="#ffffff"
-              bgColor="#424242"
-              pdR={3}
-              pdT={1}
-              state={awaitingLogin}
-            />
+            <Box
+              sx={{
+                width: "100%",
+                alignSelf: "center",
+                display: "flex",
+                justifyContent: "center",
+                bgcolor: "transparent",
+                border: "none",
+              }}
+              onClick={handleSubmit}
+            >
+              <CustomButton
+                content="Login"
+                pdR={3}
+                pdT={1}
+                state={awaitingLogin}
+              />
+            </Box>
           </form>
         </div>
       </div>

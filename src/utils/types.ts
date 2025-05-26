@@ -1,9 +1,9 @@
 import type { Theme } from "@mui/material";
 export type TContext = {
   mobileView?: boolean;
-  handleThemeChange: () => void;
-  currentTheme: "light" | "dark";
-  themeMode: Theme;
+  handleThemeChange?: () => void;
+  currentTheme?: "light" | "dark";
+  themeMode?: Theme;
 };
 
 export type TJobDetail = {

@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 export default function Careers() {
   const classes = useStyles();
   const { jobDetails, isLoading } = useFetch(
-    "http://localhost:3000/api/fetchJobDetails"
+    "https://htmniseko-jobs.vercel.app/api/fetchJobDetails"
   );
 
   if (isLoading) return <Loading />;

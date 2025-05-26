@@ -6,6 +6,7 @@ import type { TEntry } from "../utils/types";
 import Quill from "../components/Quill";
 import CustomButton from "../components/CustomButton";
 import useError from "../hooks/useError";
+import { Box } from "@mui/material";
 
 const useStyles = makeStyles({
   add_new_job: {
@@ -99,7 +100,7 @@ function reducer(state: TEntry, action: TAction) {
 }
 
 export default function AddNewJob() {
-  const { mobileView } = useContext(AppContext);
+  const { mobileView, currentTheme } = useContext(AppContext);
   const classes = useStyles({ mobileView });
   const [state, dispatch] = useReducer(reducer, newEntry);
   const [awaitingSubmit, setAwaitingSubmit] = useState<boolean>(false);
@@ -126,7 +127,7 @@ export default function AddNewJob() {
         signal: controller.signal,
       };
       const response = await fetch(
-        "http://localhost:3000/api/addNewJob",
+        "https://htmniseko-jobs.vercel.app/api/addNewJob",
         options
       );
       if (!response.ok) {
@@ -144,7 +145,7 @@ export default function AddNewJob() {
   }
 
   return (
-    <div className={classes.add_new_job}>
+    <Box className={classes.add_new_job}>
       <div className={classes.title}>
         <h2>Add New Entry :</h2>
       </div>
@@ -181,6 +182,10 @@ export default function AddNewJob() {
             dispatch({ type: "employment_type", payload: e.target.value })
           }
           className={classes.employment_type}
+          style={{
+            backgroundColor: currentTheme === "light" ? "#DADADA" : "#1A1A1A",
+            color: currentTheme === "light" ? "#1A1A1A" : "#DADADA",
+          }}
         >
           <option value="PLJ">Full Time (PLJ)</option>
           <option value="PLE">Full Time (PLE)</option>
@@ -195,14 +200,12 @@ export default function AddNewJob() {
         <div className={classes.submit_button} onClick={handleAddNewJob}>
           <CustomButton
             content="Add New Job"
-            color="#ffffff"
-            bgColor="#424242"
             pdR={3}
             pdT={1}
             state={awaitingSubmit}
           />
         </div>
       </div>
-    </div>
+    </Box>
   );
 }

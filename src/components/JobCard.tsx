@@ -64,7 +64,7 @@ export default function JobCard({ jobOffer }: TJobCard) {
       className={classes.job_card}
       sx={{
         border: "none",
-        borderTop: `1px solid ${themeMode.palette.secondary.main}`,
+        borderTop: `1px solid ${themeMode?.palette.secondary.main}`,
       }}
     >
       <Typography variant="h5" className={classes.job_title}>

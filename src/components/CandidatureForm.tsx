@@ -209,7 +209,7 @@ export default function CandidatureForm() {
         body: formData,
       };
       const response = await fetch(
-        "http://localhost:3000/api/receiveApplication",
+        "https://htmniseko-jobs.vercel.app/api/receiveApplication",
         options
       );
       if (response.ok) {
@@ -243,7 +243,7 @@ export default function CandidatureForm() {
       className={classes.candidature_form}
       onSubmit={handleApplication}
       sx={{
-        bgcolor: themeMode.palette.background.default,
+        bgcolor: themeMode?.palette.background.default,
       }}
     >
       <Box className={classes.group} sx={{ border: "none" }}>

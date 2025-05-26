@@ -30,7 +30,10 @@ const useStyles = makeStyles({
 
 export default function Main() {
   const { mobileView, currentTheme } = useContext(AppContext);
-  const classes = useStyles({ mobileView, currentTheme });
+  const classes = useStyles({
+    mobileView,
+    currentTheme: currentTheme || "light",
+  });
   return (
     <div className={classes.main}>
       <Header />

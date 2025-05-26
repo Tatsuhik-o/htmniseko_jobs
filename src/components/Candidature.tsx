@@ -76,9 +76,7 @@ export default function Candidature({
       <Box className={classes.candidature}>
         <div onClick={() => controllerFunction((prev) => !prev)}>
           <CustomButton
-            color={isApplying ? "#145288" : "#ffffff"}
             content={isApplying ? "View Job Description" : "Apply For This Job"}
-            bgColor={isApplying ? "#ffffff" : "#145288"}
             pdR={1.5}
             pdT={1}
             state={false}
